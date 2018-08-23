@@ -1,0 +1,5 @@
+influxdb:
+  host_url: 'host_url'
+  username: 'username'
+  password: 'password'
+  database: 'database'
