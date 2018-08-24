@@ -1,5 +1,15 @@
 influxdb:
-  host_url: 'host_url'
-  username: 'username'
-  password: 'password'
-  database: 'database'
+  host_url: '-'
+  port: 0
+  username: '-'
+  password: '-'
+
+envoy:
+  influx_database: '-'
+  host_url: 'envoy.local'
+
+darksky:
+  influx_database: 'weather'
+  latitude: 0
+  longitude: 0
+  api_key: '-'

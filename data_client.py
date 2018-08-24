@@ -3,15 +3,18 @@ import config
 import datetime
 
 class DataClient():
-    def __init__(self):
+    def __init__(self, database = None):
         self.config = config.Config()
+        if database is None:
+            database = self.config.influxdb.database
         self.influx_client = influxdb.InfluxDBClient(
             self.config.influxdb.host_url,
             self.config.influxdb.port,
             self.config.influxdb.username,
             self.config.influxdb.password,
-            self.config.influxdb.database
+            database
         )
+        
     def write(self, measurement, fields = {}, timestamp = None, tags = {}):
         return self.influx_client.write_points([self.json_data(
             measurement, fields, timestamp, tags

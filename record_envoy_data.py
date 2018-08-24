@@ -3,7 +3,7 @@ import config
 import requests
 
 cfg = config.Config()
-dc = data_client.DataClient()
+dc = data_client.DataClient(database=cfg.envoy.influx_database)
 
 data = requests.get('http://'+cfg.envoy.host_url+'/production.json').json()
 
