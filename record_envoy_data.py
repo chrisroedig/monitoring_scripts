@@ -3,6 +3,7 @@ import config
 import requests
 
 cfg = config.Config()
+old_dc = data_client.DataClient(database=cfg.influxdb.database)
 dc = data_client.DataClient(database=cfg.envoy.influx_database)
 
 data = requests.get('http://'+cfg.envoy.host_url+'/production.json').json()
@@ -16,7 +17,17 @@ consumption_fields = {
     'apparent_power':consumption_data['apprntPwr'],
     'power_factor':consumption_data['pwrFactor']
 }
-dc.write('iq_envoy_consumption', consumption_fields)
+
+
+net_consumption_data = data['consumption'][1]
+net_consumption_fields = {
+    'power': consumption_data['wNow'],
+    'rms_current': consumption_data['rmsCurrent'],
+    'rms_voltage':consumption_data['rmsVoltage'],
+    'reactive_power':consumption_data['reactPwr'],
+    'apparent_power':consumption_data['apprntPwr'],
+    'power_factor':consumption_data['pwrFactor']
+}
 
 production_data = data['production'][1]
 production_fields = {
@@ -28,4 +39,9 @@ production_fields = {
     'power_factor':production_data['pwrFactor']
 }
 
-dc.write('iq_envoy_production', production_fields)
+old_dc.write('iq_envoy_production', production_fields)
+old_dc.write('iq_envoy_consumption', consumption_fields)
+
+dc.write('iq_envoy_power', fields=production_fields, tags={'type':'production'})
+dc.write('iq_envoy_power', fields=consumption_fields,tags={'type':'consumption'})
+dc.write('iq_envoy_power', fields=net_consumption_fields,tags={'type':'net_consumption'})
