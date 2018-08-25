@@ -24,15 +24,15 @@ consumption_fields = {
 
 net_consumption_data = data['consumption'][1]
 net_consumption_fields = {
-    'power': consumption_data['wNow'],
-    'rms_current': consumption_data['rmsCurrent'],
-    'rms_voltage':consumption_data['rmsVoltage'],
-    'reactive_power':consumption_data['reactPwr'],
-    'apparent_power':consumption_data['apprntPwr'],
-    'power_factor':consumption_data['pwrFactor'],
-    'wh_today': consumption_data['whToday'],
-    'wh_last_seven_days': consumption_data['whLastSevenDays'],
-    'wh_lifetime': consumption_data['whLifetime']
+    'power': net_consumption_data['wNow'],
+    'rms_current': net_consumption_data['rmsCurrent'],
+    'rms_voltage':net_consumption_data['rmsVoltage'],
+    'reactive_power':net_consumption_data['reactPwr'],
+    'apparent_power':net_consumption_data['apprntPwr'],
+    'power_factor':net_consumption_data['pwrFactor'],
+    'wh_today': net_consumption_data['whToday'],
+    'wh_last_seven_days': net_consumption_data['whLastSevenDays'],
+    'wh_lifetime': net_consumption_data['whLifetime']
 }
 
 production_data = data['production'][1]
