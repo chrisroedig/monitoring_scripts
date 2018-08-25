@@ -18,22 +18,20 @@ def request_weather():
 
 wdata = request_weather()
 weather_fields = {
- 'apparent_temp' : wdata['apparentTemperature'],
- 'cloud_cover' : wdata['cloudCover'],
- 'due_point' : wdata['dewPoint'],
- 'humidity' : wdata['humidity'],
- 'storm_bearing' : wdata['nearestStormBearing'],
- 'storm_distance' : wdata['nearestStormDistance'],
- 'ozone' : wdata['ozone'],
- 'precip_intensity' : wdata['precipIntensity'],
- 'precip_probability' : wdata['precipProbability'],
- 'pressure' : wdata['pressure'],
- 'temp' : wdata['temperature'],
- 'uv_index' : wdata['uvIndex'],
- 'visibility' : wdata['visibility'],
- 'wind_bearing' : wdata['windBearing'],
- 'wind_gust' : wdata['windGust'],
- 'wind_speed' : wdata['windSpeed']
+ 'apparent_temp' : float(wdata['apparentTemperature']),
+ 'cloud_cover' : float(wdata['cloudCover']),
+ 'due_point' : float(wdata['dewPoint']),
+ 'humidity' : float(wdata['humidity']),
+ 'ozone' : float(wdata['ozone']),
+ 'precip_intensity' : float(wdata['precipIntensity']),
+ 'precip_probability' : float(wdata['precipProbability']),
+ 'pressure' : float(wdata['pressure']),
+ 'temp' : float(wdata['temperature']),
+ 'uv_index' : float(wdata['uvIndex']),
+ 'visibility' : float(wdata['visibility']),
+ 'wind_bearing' : float(wdata['windBearing']),
+ 'wind_gust' : float(wdata['windGust']),
+ 'wind_speed' : float(wdata['windSpeed'])
 }
 
 tags = {
