@@ -15,7 +15,10 @@ consumption_fields = {
     'rms_voltage':consumption_data['rmsVoltage'],
     'reactive_power':consumption_data['reactPwr'],
     'apparent_power':consumption_data['apprntPwr'],
-    'power_factor':consumption_data['pwrFactor']
+    'power_factor':consumption_data['pwrFactor'],
+    'wh_today': consumption_data['whToday'],
+    'wh_last_seven_days': consumption_data['whLastSevenDays'],
+    'wh_lifetime': consumption_data['whLifetime']
 }
 
 
@@ -26,7 +29,10 @@ net_consumption_fields = {
     'rms_voltage':consumption_data['rmsVoltage'],
     'reactive_power':consumption_data['reactPwr'],
     'apparent_power':consumption_data['apprntPwr'],
-    'power_factor':consumption_data['pwrFactor']
+    'power_factor':consumption_data['pwrFactor'],
+    'wh_today': consumption_data['whToday'],
+    'wh_last_seven_days': consumption_data['whLastSevenDays'],
+    'wh_lifetime': consumption_data['whLifetime']
 }
 
 production_data = data['production'][1]
@@ -36,7 +42,10 @@ production_fields = {
     'rms_voltage':production_data['rmsVoltage'],
     'reactive_power':production_data['reactPwr'],
     'apparent_power':production_data['apprntPwr'],
-    'power_factor':production_data['pwrFactor']
+    'power_factor':production_data['pwrFactor'],
+    'wh_today': production_data['whToday'],
+    'wh_last_seven_days': production_data['whLastSevenDays'],
+    'wh_lifetime': production_data['whLifetime']
 }
 
 old_dc.write('iq_envoy_production', production_fields)
