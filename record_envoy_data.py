@@ -30,9 +30,9 @@ net_consumption_fields = {
     'reactive_power':net_consumption_data['reactPwr'],
     'apparent_power':net_consumption_data['apprntPwr'],
     'power_factor':net_consumption_data['pwrFactor'],
-    'wh_today': net_consumption_data['whToday'],
-    'wh_last_seven_days': net_consumption_data['whLastSevenDays'],
-    'wh_lifetime': net_consumption_data['whLifetime']
+    'wh_today': float(net_consumption_data['whToday']),
+    'wh_last_seven_days': float(net_consumption_data['whLastSevenDays']),
+    'wh_lifetime': float(net_consumption_data['whLifetime')]
 }
 
 production_data = data['production'][1]
