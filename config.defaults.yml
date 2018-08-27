@@ -1,11 +1,11 @@
 influxdb:
-  host_url: '-'
-  port: 0
+  host_url: 'locahost'
+  port: 8086
   username: '-'
   password: '-'
 
 envoy:
-  influx_database: '-'
+  influx_database: 'energy'
   host_url: 'envoy.local'
 
 darksky:
@@ -13,3 +13,14 @@ darksky:
   latitude: 0
   longitude: 0
   api_key: '-'
+
+pysolar:
+  influx_database: 'weather'
+  location_tag: '-'
+  latitude: 0
+  longitude: 0
+  panel_count: 0
+  panel_area: 0
+  panel_altitude: 0
+  panel_azimuth: 0
+  system_efficiency: 0

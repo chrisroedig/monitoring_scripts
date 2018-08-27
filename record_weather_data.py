@@ -37,4 +37,5 @@ weather_fields = {
 tags = {
     'location': '395_riley'
 }
+
 dc.write('weather_report', fields=weather_fields, tags=tags)
