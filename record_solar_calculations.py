@@ -50,7 +50,7 @@ tags = {
     'system': '20xSW295_IQ6+'
 }
 
-def backfill(start_date, days):
+def batch(start_date, days):
     slices = days*24*6
     for i in range(slices):
         ts = start_date + datetime.timedelta(minutes=i*10)
@@ -61,4 +61,5 @@ def backfill(start_date, days):
 
 if __name__ == '__main__':
     now = datetime.datetime.now()
-    dc.write('solar_report', fields=solar_fields, tags=tags, timestamp=now)
+    data = calc_solar_data(now)
+    dc.write('solar_report', fields=data, tags=tags)
