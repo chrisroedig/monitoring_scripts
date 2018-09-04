@@ -28,7 +28,7 @@ def calc_solar_data(t):
     az_diff = scfg.panel_azimuth - solar_fields['azimuth']
     az_projection = max(0,math.cos(math.pi*az_diff/180.0))
 
-    alt_diff = scfg.panel_altitude - solar_fields['altitude']
+    alt_diff = (90-scfg.panel_altitude) - solar_fields['altitude']
     alt_projection = max(0,math.cos(math.pi*alt_diff/180.0))
 
     solar_fields['alt_projection'] = float(alt_projection)
