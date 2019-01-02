@@ -3,7 +3,6 @@ import config
 import requests
 
 cfg = config.Config()
-old_dc = data_client.DataClient(database=cfg.influxdb.database)
 dc = data_client.DataClient(database=cfg.envoy.influx_database)
 
 data = requests.get('http://'+cfg.envoy.host_url+'/production.json').json()
@@ -47,9 +46,6 @@ production_fields = {
     'wh_last_seven_days': production_data['whLastSevenDays'],
     'wh_lifetime': production_data['whLifetime']
 }
-
-old_dc.write('iq_envoy_production', production_fields)
-old_dc.write('iq_envoy_consumption', consumption_fields)
 
 dc.write('iq_envoy_power', fields=production_fields, tags={'type':'production'})
 dc.write('iq_envoy_power', fields=consumption_fields,tags={'type':'consumption'})
