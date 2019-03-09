@@ -20,20 +20,20 @@ timestamp = datetime.datetime.fromtimestamp(data["dateutc"]/(1e3))
 
 weather_fields = {
     'wind_direction': data["winddir"],
-    'wind_speed_mph': data["windspeedmph"],
-    'wind_gust_mph': data["windgustmph"],
-    'temp_f': data["tempf"],
-    'hourly_rain_in': data["hourlyrainin"],
-    'event_rain_in': data["eventrainin"],
-    'barometric_pressure_rel_in': data["baromrelin"],
-    'barometric_pressure_abs_in': data["baromabsin"],
+    'wind_speed_mph': float(data["windspeedmph"]),
+    'wind_gust_mph': float(data["windgustmph"]),
+    'temp_f': float(data["tempf"]),
+    'hourly_rain_in': float(data["hourlyrainin"]),
+    'event_rain_in': float(data["eventrainin"]),
+    'barometric_pressure_rel_in': float(data["baromrelin"]),
+    'barometric_pressure_abs_in': float(data["baromabsin"]),
     'humidity': data["humidity"],
-    'temp_indoor_f': data["tempinf"],
+    'temp_indoor_f': float(data["tempinf"]),
     'humidity_indoor': data["humidityin"],
     'uv_index': data["uv"],
-    'solar_flux': data["solarradiation"],
-    'apparent_temp_f': data["feelsLike"],
-    'dew_point_f': data["dewPoint"]
+    'solar_flux': float(data["solarradiation"]),
+    'apparent_temp_f': float(data["feelsLike"]),
+    'dew_point_f': float(data["dewPoint"])
 }
 
 tags = {
