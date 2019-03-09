@@ -1,5 +1,5 @@
 influxdb:
-  host_url: 'locahost'
+  host_url: 'localhost'
   port: 8086
   username: '-'
   password: '-'
@@ -24,3 +24,10 @@ pysolar:
   panel_altitude: 0
   panel_azimuth: 0
   system_efficiency: 0
+
+ambient:
+  influx_database: 'weather'
+  mac_address: ''
+  api_key: ''
+  application_key: ''
+  location_tag: ''

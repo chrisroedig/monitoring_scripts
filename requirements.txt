@@ -2,3 +2,4 @@ influxdb
 requests
 pyyaml
 pysolar
+ambient_api
