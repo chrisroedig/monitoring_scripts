@@ -31,3 +31,8 @@ ambient:
   api_key: ''
   application_key: ''
   location_tag: ''
+
+ecobee:
+  client_id: your ecobee app client id
+  influx_database: 'hvac'
+  location_tag: ''
