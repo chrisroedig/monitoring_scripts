@@ -11,7 +11,9 @@ class Config():
     def list(self):
         return self._data.keys()
     def __getattr__(self,name):
-        val = self._data.get(name)
+        if self._data is None:
+            return None
+        val = self._data.get(name, None)
         if type(val) == dict:
             return self.child_config(val, name)
         return val

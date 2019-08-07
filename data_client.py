@@ -5,6 +5,8 @@ import datetime
 class DataClient():
     def __init__(self, database = None):
         self.config = config.Config()
+        if self.config.influxdb is None:
+            raise Exception('configuration for "influxdb" not found')
         if database is None:
             database = self.config.influxdb.database
         self.influx_client = influxdb.InfluxDBClient(
