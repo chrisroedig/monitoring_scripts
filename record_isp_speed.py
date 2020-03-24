@@ -1,40 +1,5 @@
-# {
-# 'download': 10154489.247588266,
-# 'upload': 3391086.0923270765,
-# 'ping': 28.171,
-# 
-#  'server': {'url': 'http://speedy.az21.cloudpropeller.com:8080/speedtest/upload.php',
-#   'lat': '39.9611',
-#   'lon': '-82.9989',
-#   'name': 'Columbus, OH',
-#   'country': 'United States',
-#   'cc': 'US',
-#   'sponsor': 'CloudPropeller.com',
-#   'id': '24678',
-#   'host': 'speedy.az21.cloudpropeller.com:8080',
-#   'd': 13.701871236061143,
-#   'latency': 28.171},
-
-#  'timestamp': '2020-03-23T14:48:41.257967Z',
-#  'bytes_sent': 5242880,
-#  'bytes_received': 12745120,
-#  
-#  'share': None,
-#  'client': {'ip': '24.96.10.176',
-#   'lat': '40.0818',
-#   'lon': '-82.9665',
-#   'isp': 'WideOpenWest',
-#   'isprating': '3.7',
-#   'rating': '0',
-#   'ispdlavg': '0',
-#   'ispulavg': '0',
-#   'loggedin': '0',
-#   'country': 'US'}}
-
-
 import data_client
 import config
-import datetime
 import speedtest
 import dateutil
 
