@@ -1,5 +1,4 @@
-import data_client
-import config
+import influx_client
 import requests
 
 cfg = config.Config()

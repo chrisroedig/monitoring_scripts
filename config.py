@@ -7,7 +7,7 @@ class Config():
             self._data = d
         else:
             self._source = filename
-            self._data = yaml.load(open(filename, 'r').read())
+            self._data = yaml.load(open(filename, 'r').read(), Loader=yaml.FullLoader)
     def list(self):
         return self._data.keys()
     def __getattr__(self,name):

@@ -3,3 +3,4 @@ requests
 pyyaml
 pysolar
 ambient_api
+paho-mqtt
