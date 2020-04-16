@@ -1,6 +1,12 @@
 import influxdb
-import config
 import datetime
+from receivers.receiver import ReceiverBase
+
+class Receiver(ReceiverBase):
+    def __init__(self, config):
+        self.config = config.influxdb
+    def send(self, payload, source_config):
+        pass
 
 # TODO: finish this
 
