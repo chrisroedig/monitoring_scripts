@@ -26,7 +26,7 @@ class Config():
         return self._source.split("::")
     def save(self, keyname, value):
         filename = self.path()[0]
-        file_dict = yaml.load(open(filename, 'r').read())
+        file_dict = yaml.load(open(filename, 'r').read(), Loader=yaml.FullLoader)
         working_dict = file_dict
         self._data[keyname] = value
         for k in self.path()[1:]:

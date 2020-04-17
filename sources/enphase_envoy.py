@@ -20,13 +20,12 @@ class DataSource(DataSourceBase):
             'reactive_power':field_data['reactPwr'],
             'apparent_power':field_data['apprntPwr'],
             'power_factor':field_data['pwrFactor'],
-            'wh_today': field_data['whToday'],
-            'wh_last_seven_days': field_data['whLastSevenDays'],
-            'wh_lifetime': field_data['whLifetime']
+            'wh_today': float(field_data['whToday']),
+            'wh_last_seven_days': float(field_data['whLastSevenDays']),
+            'wh_lifetime': float(field_data['whLifetime'])
         }
         tags = {'type': ptype}
-        topic = ptype
-        return EnvoyPayload(topic, tags, fields)
+        return EnvoyPayload(tags, fields)
     
     def payloads(self):
         if self.data is None:
@@ -38,5 +37,9 @@ class DataSource(DataSourceBase):
         ]
 
 class EnvoyPayload(DataPayload):
+    def __init__(self, tags, fields):
+        self.topic = ['iq_envoy_power', tags['type']]
+        self.tags = tags
+        self.fields = fields
     def __repr__(self):
         return f'<EnvoyPayload {self.topic} power: {self.fields["power"]}>'

@@ -16,6 +16,6 @@ for receiver_name in sys.argv[2:]:
 # iterate array and send it to each receiver
 for payload in source.payloads():
     for receiver in receivers:
-        receiver.send(payload, source.config)
+        receiver.send(payload, source_config = source.config)
 
 

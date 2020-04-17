@@ -93,8 +93,8 @@ class DataSource(DataSourceBase):
         if(resp.status_code=='200'):
             raise Exception(f'Read failed with code {resp.status_code}')
         self.data = resp.json()
-        if(resp['status']['code']!=0):
-            raise Exception(f'Code {resp["status"]["code"]}: {resp["status"]["message"]}')
+        if(self.data['status']['code']!=0):
+            raise Exception(f'Code {self.data["status"]["code"]}: {self.data["status"]["message"]}')
         return self.data
 
     def thermostat(self, data=None):
@@ -120,7 +120,7 @@ class DataSource(DataSourceBase):
             'location': self.config.location_tag
         }
         topic = 'thermostat'
-        return ThermostatDataPayload(topic, tags, fields)
+        return ThermostatDataPayload(tags, fields)
 
     def sensors(self, data=None):
         if self.data is None:
@@ -135,11 +135,7 @@ class DataSource(DataSourceBase):
                 'sensor_code': data.get('code', 'main'),
                 'location': self.config.location_tag
         }
-        fields = {
-            'sensor_code': data.get('code', 'main'),
-            'sensor_type': data['type']
-        }
-        topic = 'sensor/' + data.get('code', 'main')
+        fields = {}
         for cap in data['capability']:
             fields[cap['type']] = cap['value']
             if cap['type'] == 'temperature':
@@ -148,15 +144,25 @@ class DataSource(DataSourceBase):
                 fields[cap['type']] = int(fields[cap['type']] == 'true')
             if cap['type'] == 'humidity':
                 fields[cap['type']] = float(fields[cap['type']])
-        return SensorDataPayload(topic, tags, fields)
+        return SensorDataPayload(tags, fields)
     
     def payloads(self):
         return [self.thermostat()] + list(self.sensors())
 
 class SensorDataPayload(DataPayload):
+    def __init__(self, tags, fields):
+        self.topic = [ 'hvac_sensor', 'ecobee', tags['sensor_code'] ]
+        self.tags = tags
+        self.fields = fields
+        
     def __repr__(self):
-        return f'<SensorDataPayload {self.topic} temp: {self.fields["temperature"]}>'
+        return f'<SensorDataPayload {self.tags["sensor_code"]} temp: {self.fields["temperature"]}>'
 
 class ThermostatDataPayload(DataPayload):
+    def __init__(self, tags, fields):
+        self.topic = [ 'hvac_system', 'ecobee', 'thermostat' ]
+        self.tags = tags
+        self.fields = fields
+        
     def __repr__(self):
         return f'<ThermostatDataPayload mode: {self.fields["mode"]}, temps: {self.fields["heat_temp_f"]}/{self.fields["cool_temp_f"]}>'

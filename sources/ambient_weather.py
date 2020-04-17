@@ -24,7 +24,6 @@ class DataSource(DataSourceBase):
     def payloads(self):
         if self.data is None:
             self.get()
-        topic = self.config.mac_address[-8:].replace(':','')    
         fields = {
             'wind_direction': self.data["winddir"],
             'wind_speed_mph': float(self.data["windspeedmph"]),
@@ -44,11 +43,18 @@ class DataSource(DataSourceBase):
             'timestamp_utc_ms': self.data["dateutc"]
         }
         tags = {
-          'location': self.config.location_tag
+          'location': self.config.location_tag,
+          'mac_addr': self.config.mac_address
         }
-        return [AmbientWeatherPayload(topic, tags, fields)]
+        return [AmbientWeatherPayload(tags, fields)]
 
 
 class AmbientWeatherPayload(DataPayload):
+    def __init__(self, tags, fields):
+        mac = tags['mac_addr'][-8:].replace(':','')
+        self.topic = [ 'weather_station_data', 'ambient', mac ]
+        self.tags = tags
+        self.fields = fields
+
     def __repr__(self):
         return f'<AmbientWeatherPayload {self.topic} temp: {self.fields["temp_f"]}>'

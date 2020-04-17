@@ -6,8 +6,8 @@ class DataSourceBase():
         return []
 
 class DataPayload():
-    def __init__(self, topic, tags, fields):
-        self.topic = topic
+    def __init__(self, tags, fields):
+        self.topic = __class__.__name__.lower()
         self.tags = tags
         self.fields = fields
     
