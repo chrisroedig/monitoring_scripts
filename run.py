@@ -11,7 +11,8 @@ source = importlib.import_module("sources."+source_name).DataSource(cfg)
 receivers = []
 for receiver_name in sys.argv[2:]:
     receivers.append(importlib.import_module("receivers."+receiver_name).Receiver(cfg))
-
+if len(receivers) == 0:
+    receivers.append(importlib.import_module("receivers.print").Receiver(cfg))
 # get the array of data payloads
 # iterate array and send it to each receiver
 for payload in source.payloads():
