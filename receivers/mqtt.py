@@ -9,5 +9,8 @@ class Receiver(ReceiverBase):
 
     def send(self, payload, source_config = None):
         topic = '/'.join([self.config.root_topic] + payload.topic)
-        payload_json = json.dumps(payload.fields)
+        payload_json = json.dumps({
+            "fields": payload.fields,
+            "tags": payload.tags
+            })
         publish.single(topic, payload=payload_json, hostname=self.config.host)
