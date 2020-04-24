@@ -111,8 +111,8 @@ class DataSource(DataSourceBase):
             'fan_mode' : data['runtime']['desiredFanMode'],
             'fan_mode_auto' : int(data['runtime']['desiredFanMode'] == 'auto'),
             'fan_mode_on' : int(data['runtime']['desiredFanMode'] == 'on'),
-            'heating' : int('compCool' in data['equipmentStatus']),
-            'cooling' : int('auxHeat' in data['equipmentStatus']),
+            'heating' : int('auxHeat' in data['equipmentStatus']),
+            'cooling' : int('compCool' in data['equipmentStatus']),
             'fan_running' : int('fan' in data['equipmentStatus'])
         }
         tags = {
