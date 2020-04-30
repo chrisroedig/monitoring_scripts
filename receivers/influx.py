@@ -12,7 +12,7 @@ class Receiver(ReceiverBase):
         measurement = payload.topic[0]
         client = self.client(source_config.influx_database)
         data = self.json_data(
-            measurement, payload.fields, None, payload.tags)
+            measurement, payload.fields, timestamp=payload.timestamp, tags=payload.tags)
         client.write_points([data])
 
     def json_data(self, measurement, fields, timestamp = None, tags={}):
