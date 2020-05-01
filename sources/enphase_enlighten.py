@@ -15,10 +15,11 @@ class DataSource(DataSourceBase):
           session_file=self.config.session_file,
           config_file=self.config.config_file
         )
+        self.time_delay = self.config._data.get('time_delay', 20)
         self.client.login(self.config.username, self.config.password)
 
     def get(self):
-        self.time = datetime.now() - timedelta(minutes=15)
+        self.time = datetime.now() - timedelta(minutes=self.time_delay)
         _t, self.powers = self.client.array_power(self.time)
         self.devices = self.client.device_index
       
