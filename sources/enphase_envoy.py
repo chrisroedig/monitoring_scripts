@@ -1,6 +1,7 @@
 import requests
 from sources.data_source import DataSourceBase
 from sources.data_source import DataPayload
+from datetime import datetime
 
 class DataSource(DataSourceBase):
     def __init__(self, config):
@@ -41,5 +42,6 @@ class EnvoyPayload(DataPayload):
         self.topic = ['iq_envoy_power', tags['type']]
         self.tags = tags
         self.fields = fields
+        self.timestamp = datetime.now()
     def __repr__(self):
         return f'<EnvoyPayload {self.topic} power: {self.fields["power"]}>'

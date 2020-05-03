@@ -34,7 +34,7 @@ class DataSource(DataSourceBase):
           'panel_number': i
         }
         fields = {
-          'power' : self.powers[i]
+          'power' :float(self.powers[i])
         }
         return EnlightenPayload(tags, fields, self.time)
 

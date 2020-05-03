@@ -1,6 +1,6 @@
 from ambient_api.ambientapi import AmbientAPI
 import requests
-import datetime
+from datetime import datetime
 from sources.data_source import DataSourceBase
 from sources.data_source import DataPayload
 
@@ -55,6 +55,7 @@ class AmbientWeatherPayload(DataPayload):
         self.topic = [ 'weather_station_data', 'ambient', mac ]
         self.tags = tags
         self.fields = fields
+        self.timestamp = datetime.now()
 
     def __repr__(self):
         return f'<AmbientWeatherPayload {self.topic} temp: {self.fields["temp_f"]}>'

@@ -2,6 +2,7 @@ import requests
 import json
 import time
 import sys
+from datetime import datetime
 from sources.data_source import DataSourceBase
 from sources.data_source import DataPayload
 
@@ -163,6 +164,7 @@ class ThermostatDataPayload(DataPayload):
         self.topic = [ 'hvac_system', 'ecobee', 'thermostat' ]
         self.tags = tags
         self.fields = fields
+        self.timestamp = datetime.now()
         
     def __repr__(self):
         return f'<ThermostatDataPayload mode: {self.fields["mode"]}, temps: {self.fields["heat_temp_f"]}/{self.fields["cool_temp_f"]}>'
