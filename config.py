@@ -10,6 +10,8 @@ class Config():
             self._data = yaml.load(open(filename, 'r').read(), Loader=yaml.FullLoader)
     def list(self):
         return self._data.keys()
+    def dict(self):
+        return self._data
     def __getattr__(self,name):
         if self._data is None:
             return None

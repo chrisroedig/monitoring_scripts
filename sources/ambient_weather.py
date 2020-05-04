@@ -6,7 +6,7 @@ from sources.data_source import DataPayload
 
 class DataSource(DataSourceBase):
     def __init__(self, config):
-        self.config = config.ambient
+        self.config = config.ambient_weather
         self.data = None
         self.url = f'https://api.ambientweather.net/v1/devices/{self.config.mac_address}'
         if self.config is None:
@@ -19,6 +19,7 @@ class DataSource(DataSourceBase):
             'limit':1
             }
         resp = requests.get(self.url, params)
+        print(resp.json())
         self.data = resp.json()[0]
     
     def payloads(self):
