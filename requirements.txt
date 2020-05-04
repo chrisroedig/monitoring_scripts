@@ -5,4 +5,4 @@ pysolar
 ambient_api
 paho-mqtt
 schedule
-# py-enphase-enlighten
+git+https://github.com/chrisroedig/py-enphase-enlighten.git@v0.1.1
