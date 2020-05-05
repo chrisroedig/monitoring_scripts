@@ -22,20 +22,20 @@ def init():
         print(f'<{source}.{task_name}> will run every {minutes}m')
 
 def run_job(source, receivers):
-    print(f'Runnning <{key}> with {receivers}')
+    print(f'Runnning <{source}> with {receivers}')
     try:
-        run_once.run(key, receivers)
-        print(f'Finished runnning <{key}>')
+        run_once.run(source, receivers)
+        print(f'Finished runnning <{source}>')
     except:
-        print(f'Exception while running <{key}>')
+        print(f'Exception while running <{source}>')
 
 def run_task(source, task_name):
-    print(f'Runnning <{source}.{tas_name}>')
+    print(f'Runnning <{source}.{task_name}>')
     try:
         task.run(source, task_name)
         print(f'Finished runnning <{source}.{task_name}>')
     except:
-        print(f'Exception while running <{source}.{tas_name}>')
+        print(f'Exception while running <{source}.{task_name}>')
 
 
 def run():
