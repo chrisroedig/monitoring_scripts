@@ -155,7 +155,8 @@ class SensorDataPayload(DataPayload):
         self.topic = [ 'hvac_sensor', 'ecobee', tags['sensor_code'] ]
         self.tags = tags
         self.fields = fields
-        
+        self.timestamp = datetime.now()
+
     def __repr__(self):
         return f'<SensorDataPayload {self.tags["sensor_code"]} temp: {self.fields["temperature"]}>'
 
