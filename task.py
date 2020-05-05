@@ -9,3 +9,4 @@ def run(source_name, task_name):
 if __name__ == '__main__':
     source_name = sys.argv[1]
     task_name = sys.argv[2]
+    run(source_name, task_name)
