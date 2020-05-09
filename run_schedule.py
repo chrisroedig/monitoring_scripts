@@ -18,7 +18,7 @@ def init():
     for source in cfg.tasks.list():
         task_name = cfg.tasks.dict()[source]['task']
         minutes = cfg.tasks.dict()[source]['minutes']
-        schedule.every(minutes).minutes.do(run_task, source, task)
+        schedule.every(minutes).minutes.do(run_task, source, task_name)
         print(f'<{source}.{task_name}> will run every {minutes}m')
 
 def run_job(source, receivers):
