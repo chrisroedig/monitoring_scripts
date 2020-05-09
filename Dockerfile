@@ -9,4 +9,4 @@ COPY . .
 # install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "./run_schedule.py"]
+CMD ["python", "-u", "./run_schedule.py"]
