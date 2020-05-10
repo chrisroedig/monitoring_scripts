@@ -1,7 +1,10 @@
 import yaml
+import os
 
 class Config():
     def __init__(self, filename='config.yml', d = None, source = None):
+        if os.getenv('CONFIG_FILE') is not None:
+            filename = os.getenv('CONFIG_FILE')
         if d is not None:
             self._source = source
             self._data = d

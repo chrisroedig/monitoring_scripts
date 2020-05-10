@@ -6,6 +6,11 @@ WORKDIR /usr/src/app
 # copy all the files to the container
 COPY . .
 
+# add the config to the /data volume
+ADD config.yml /data/config.yml
+
+ENV CONFIG_FILE /data/config.yml
+
 # install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
