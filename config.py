@@ -15,6 +15,8 @@ class Config():
         return self._data.keys()
     def dict(self):
         return self._data
+    def get(self, key, default=None):
+        return self._data.get(key, default)
     def __getattr__(self,name):
         if self._data is None:
             return None

@@ -5,6 +5,8 @@ import sys
 from datetime import datetime
 from sources.data_source import DataSourceBase
 from sources.data_source import DataPayload
+import pickle
+import os
 
 API_URL = 'https://api.ecobee.com/'
 
@@ -14,10 +16,23 @@ class DataSource(DataSourceBase):
         self.data = None
         if self.config is None:
             raise Exception('no configuration for ecobee found')
+        self.session_file = self.config.get('session_file','ecobee_session.p')
+        self.session = {}
+        self.load_session()
+    
+    def load_session(self):
+        if not os.path.exists(self.session_file):
+            return False
+        self.session = pickle.load(open( self.session_file, "rb" ))
+        return self.session != None
+
+    def save_session(self):
+        pickle.dump( self.session, open( self.session_file, "wb" ) )
+
     def get_pin(self):
         resp = self.get("authorize", params= {'scope': 'smartWrite', 'response_type': 'ecobeePin'}, auth=False)
         data = resp.json()
-        return data['ecobeePin'], data['code']    
+        return data['ecobeePin'], data['code']
 
     def create_original_token(self, code):
         resp = self.post("token", params= {'code': code, 'grant_type': 'ecobeePin'})
@@ -38,7 +53,7 @@ class DataSource(DataSourceBase):
         p.update(params)
         h = {}
         if(auth is True):
-            h.update({'Authorization': 'Bearer %s' % self.config.access_token})
+            h.update({'Authorization': 'Bearer %s' % self.session['access_token']})
         return requests.get("%s/%s" % (API_URL, path) , params = p, headers = h)
   
     def post(self, path, params = {}, data = None):
@@ -63,22 +78,22 @@ class DataSource(DataSourceBase):
             else:
                 print('got token!')
                 print(token_info)
-                self.config.save('access_token', token_info['access_token'])
-                self.config.save('refresh_token', token_info['refresh_token'])
+                self.session = token_info
+                self.save_session()
                 break
             time.sleep(5)
         print('Done!')
 
     def reauthorize(self):
-        token_info = self.create_token(self.config.refresh_token)
+        token_info = self.create_token(self.session['refresh_token'])
         if token_info is None :
             print('FAILED')
             return False
         else:
             print('got token!')
             print(token_info)
-            self.config.save('access_token', token_info['access_token'])
-            self.config.save('refresh_token', token_info['refresh_token'])
+            self.session = token_info
+            self.save_session()
             return True
 
     def read(self):
