@@ -19,12 +19,16 @@ class DataSource(DataSourceBase):
             'limit':1
             }
         resp = requests.get(self.url, params)
-        print(resp.json())
+        if resp.status_code != 200:
+            print(resp.content)
+            return False
+        if len(resp.json()) < 1:
+            return False
         self.data = resp.json()[0]
     
     def payloads(self):
-        if self.data is None:
-            self.get()
+        if self.get() is False:
+            return []
         fields = {
             'wind_direction': self.data["winddir"],
             'wind_speed_mph': float(self.data["windspeedmph"]),
