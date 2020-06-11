@@ -23,6 +23,7 @@ class DataSource(DataSourceBase):
             print(resp.content)
             return False
         if len(resp.json()) < 1:
+            print(resp.content)
             return False
         self.data = resp.json()[0]
     
