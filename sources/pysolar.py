@@ -9,10 +9,7 @@ class DataSource(DataSourceBase):
         self.config = config.pysolar
         if self.config is None:
             raise Exception('no configuration for pysolar found')
-        self.reset_fields()
-        
-    def reset_fields(self):
-        self.fields = {
+        self.default_fields = {
             'altitude': 0.0,
             'azimuth': 0.0,
             'direct_flux': 0.0,
@@ -20,7 +17,7 @@ class DataSource(DataSourceBase):
             'projected_direct_power': 0.0
         }
 
-    def payloads(self, start_time=None, samples=6, step=10):
+    def payloads(self, start_time=None, samples=60, step=30):
         if start_time is None:
             start_time = datetime.datetime.now(datetime.timezone.utc)
         times = [ 
@@ -37,29 +34,29 @@ class DataSource(DataSourceBase):
         palt = self.config.panel_altitude
 
         effective_area = self.config.system_efficiency * self.config.panel_count * self.config.panel_area
+        fields = dict(self.default_fields)
+        fields['altitude'] = solar.get_altitude(lat, lng, ts)
+        fields['azimuth'] = (180 - solar.get_azimuth(lat, lng, ts))%360
 
-        self.fields['altitude'] = solar.get_altitude(lat, lng, ts)
-        self.fields['azimuth'] = (180 - solar.get_azimuth(lat, lng, ts))%360
-
-        az_diff = paz - self.fields['azimuth']
+        az_diff = paz - fields['azimuth']
         az_projection = max(0,math.cos(math.pi*az_diff/180.0))
 
-        alt_diff = (90-palt) - self.fields['altitude']
+        alt_diff = (90-palt) - fields['altitude']
         alt_projection = max(0,math.cos(math.pi*alt_diff/180.0))
 
-        self.fields['alt_projection'] = float(alt_projection)
-        self.fields['az_projection'] = float(az_projection)
-        self.fields['total_projection'] = float(az_projection * alt_projection)
+        fields['alt_projection'] = float(alt_projection)
+        fields['az_projection'] = float(az_projection)
+        fields['total_projection'] = float(az_projection * alt_projection)
 
-        if self.fields['altitude'] > 0:
-            self.fields['direct_flux'] = solar.radiation.get_radiation_direct(ts, self.fields['altitude'])
-            self.fields['projected_flux'] = self.fields['direct_flux'] * self.fields['total_projection']
-            self.fields['max_direct_power'] = effective_area * self.fields['direct_flux']
-            self.fields['projected_direct_power'] = effective_area *  self.fields['projected_flux']
+        if fields['altitude'] > 0:
+            fields['direct_flux'] = solar.radiation.get_radiation_direct(ts, fields['altitude'])
+            fields['projected_flux'] = fields['direct_flux'] * fields['total_projection']
+            fields['max_direct_power'] = effective_area * fields['direct_flux']
+            fields['projected_direct_power'] = effective_area *  fields['projected_flux']
         tags = {
             'location': self.config.location_tag,
         }
-        return PySolarPayload(tags, self.fields, time)
+        return PySolarPayload(tags, fields, time)
 
 
 class PySolarPayload(DataPayload):
@@ -70,4 +67,4 @@ class PySolarPayload(DataPayload):
         self.fields = fields
     
     def __repr__(self):
-        return f'<PySolarPayload {self.topic} power: {self.fields["projected_direct_power"]}>'
+        return f'<PySolarPayload {self.topic} time: {self.timestamp.strftime("%H:%M") } power: {self.fields["max_direct_power"]}>'
