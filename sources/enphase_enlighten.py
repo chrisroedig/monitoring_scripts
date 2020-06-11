@@ -15,7 +15,7 @@ class DataSource(DataSourceBase):
           session_file=self.config.session_file,
           config_file=self.config.config_file
         )
-        self.time_delay = self.config._data.get('time_delay', 20)
+        self.time_delay = self.config._data.get('time_delay', 0)
         self.client.login(self.config.username, self.config.password)
 
     def get(self):

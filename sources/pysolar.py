@@ -17,12 +17,12 @@ class DataSource(DataSourceBase):
             'projected_direct_power': 0.0
         }
 
-    def payloads(self, start_time=None, samples=60, step=30):
+    def payloads(self, start_time=None):
         if start_time is None:
             start_time = datetime.datetime.now(datetime.timezone.utc)
         times = [ 
-            (start_time + datetime.timedelta(minutes=(i * step))) 
-            for i in range(samples) 
+            (start_time + datetime.timedelta(minutes=(i * self.config.time_step))) 
+            for i in range(self.config.samples) 
             ]
         return [ self.payload(t) for t in times ]
 
@@ -36,7 +36,7 @@ class DataSource(DataSourceBase):
         effective_area = self.config.system_efficiency * self.config.panel_count * self.config.panel_area
         fields = dict(self.default_fields)
         fields['altitude'] = solar.get_altitude(lat, lng, ts)
-        fields['azimuth'] = (180 - solar.get_azimuth(lat, lng, ts))%360
+        fields['azimuth'] = solar.get_azimuth(lat, lng, ts)%360
 
         az_diff = paz - fields['azimuth']
         az_projection = max(0,math.cos(math.pi*az_diff/180.0))
@@ -67,4 +67,4 @@ class PySolarPayload(DataPayload):
         self.fields = fields
     
     def __repr__(self):
-        return f'<PySolarPayload {self.topic} time: {self.timestamp.strftime("%H:%M") } power: {self.fields["max_direct_power"]}>'
+        return f'<PySolarPayload {self.topic} time: {self.timestamp.strftime("%H:%M") } power: {self.fields["projected_direct_power"]}>'
