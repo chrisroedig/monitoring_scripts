@@ -57,11 +57,11 @@ class DataSource(DataSourceBase):
 
 class AmbientWeatherPayload(DataPayload):
     def __init__(self, tags, fields):
+        super().__init__(tags, fields)
         mac = tags['mac_addr'][-8:].replace(':','')
         self.topic = [ 'weather_station_data', 'ambient', mac ]
         self.tags = tags
         self.fields = fields
-        self.timestamp = datetime.now()
 
     def __repr__(self):
         return f'<AmbientWeatherPayload {self.topic} temp: {self.fields["temp_f"]}>'

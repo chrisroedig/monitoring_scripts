@@ -170,17 +170,16 @@ class SensorDataPayload(DataPayload):
         self.topic = [ 'hvac_sensor', 'ecobee', tags['sensor_code'] ]
         self.tags = tags
         self.fields = fields
-        self.timestamp = datetime.now()
 
     def __repr__(self):
         return f'<SensorDataPayload {self.tags["sensor_code"]} temp: {self.fields["temperature"]}>'
 
 class ThermostatDataPayload(DataPayload):
     def __init__(self, tags, fields):
+        super().__init__(tags, fields)
         self.topic = [ 'hvac_system', 'ecobee', 'thermostat' ]
         self.tags = tags
         self.fields = fields
-        self.timestamp = datetime.now()
         
     def __repr__(self):
         return f'<ThermostatDataPayload mode: {self.fields["mode"]}, temps: {self.fields["heat_temp_f"]}/{self.fields["cool_temp_f"]}>'

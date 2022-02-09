@@ -8,8 +8,7 @@ class DataSourceBase():
 
 class DataPayload():
     def __init__(self, tags, fields, timestamp=None):
-        if timestamp is None:
-            self.timestamp = datetime.now()
+        self.timestamp = timestamp
         self.topic = __class__.__name__.lower()
         self.tags = tags
         self.fields = fields

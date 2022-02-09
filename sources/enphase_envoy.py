@@ -39,9 +39,9 @@ class DataSource(DataSourceBase):
 
 class EnvoyPayload(DataPayload):
     def __init__(self, tags, fields):
+        super().__init__(tags, fields)
         self.topic = ['iq_envoy_power', tags['type']]
         self.tags = tags
         self.fields = fields
-        self.timestamp = datetime.now()
     def __repr__(self):
         return f'<EnvoyPayload {self.topic} power: {self.fields["power"]}>'

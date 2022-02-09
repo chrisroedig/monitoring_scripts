@@ -61,6 +61,7 @@ class DataSource(DataSourceBase):
 
 class PySolarPayload(DataPayload):
     def __init__(self, tags, fields, timestamp):
+        super().__init__(tags, fields)
         self.topic = [ 'solar_report', tags['location']]
         self.timestamp = timestamp
         self.tags = tags

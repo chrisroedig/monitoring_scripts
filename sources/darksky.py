@@ -53,10 +53,10 @@ class DataSource(DataSourceBase):
 
 class DarkskyPayload(DataPayload):
     def __init__(self, tags, fields):
+        super().__init__(tags, fields)
         self.topic = [ 'weather_report' ]
         self.tags = tags
         self.fields = fields
-        self.timestamp = datetime.now()
 
     def __repr__(self):
         return f'<DarkskyPayload {self.topic} temp: {self.fields["apparent_temp"]}>'

@@ -19,7 +19,7 @@ class DataSource(DataSourceBase):
         self.client.login(self.config.username, self.config.password)
 
     def get(self):
-        self.time = datetime.now() - timedelta(minutes=self.time_delay)
+        self.time = datetime.utcnow() - timedelta(minutes=self.time_delay)
         _t, self.powers = self.client.array_power(self.time)
         self.devices = self.client.device_index
       
@@ -40,6 +40,7 @@ class DataSource(DataSourceBase):
 
 class EnlightenPayload(DataPayload):
     def __init__(self, tags, fields, timestamp):
+        super().__init__(tags, fields)
         self.timestamp = timestamp
         self.topic = ['enlighten', 'device', tags['device_id']]
         self.tags = tags

@@ -1,8 +1,8 @@
-influxdb
+influxdb-client
 requests
 pyyaml
 pysolar
 ambient_api
 paho-mqtt
 schedule
-git+https://github.com/chrisroedig/py-enphase-enlighten.git@v0.1.2
+git+https://github.com/chrisroedig/py-enphase-enlighten.git@v0.1.3
