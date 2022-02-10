@@ -5,4 +5,5 @@ pysolar
 ambient_api
 paho-mqtt
 schedule
+speedtest-cli
 git+https://github.com/chrisroedig/py-enphase-enlighten.git@v0.1.3
