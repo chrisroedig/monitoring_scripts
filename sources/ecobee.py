@@ -167,6 +167,7 @@ class DataSource(DataSourceBase):
 
 class SensorDataPayload(DataPayload):
     def __init__(self, tags, fields):
+        super().__init__(tags, fields)
         self.topic = [ 'hvac_sensor', 'ecobee', tags['sensor_code'] ]
         self.tags = tags
         self.fields = fields
