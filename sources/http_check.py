@@ -13,7 +13,7 @@ class DataSource(DataSourceBase):
   def get(self):
     self.data = {
         'status_code': 0,
-        'latency': self.config.timeout,
+        'latency': float(self.config.timeout),
         'success': 0,
       }
     try:
@@ -27,6 +27,8 @@ class DataSource(DataSourceBase):
       print(f'HTTP Check timeout')
     except requests.exceptions.ConnectionError as e:
       print(f'HTTP Check conection error')
+    except Exception as e:
+      print(f'HTTP Check exception: {e}')
 
 
   def payload(self):
