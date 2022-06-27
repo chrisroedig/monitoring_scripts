@@ -11,16 +11,28 @@ class DataSource(DataSourceBase):
         raise Exception('no configuration for http_check found')
   
   def get(self):
-    self.data = requests.get(self.config.url)
+    self.data = {
+        'status_code': 0,
+        'latency': self.config.timeout,
+        'success': 0,
+      }
+    try:
+      resp = requests.get(self.config.url, timeout=self.config.timeout)
+      self.data = {
+        'status_code': resp.status_code,
+        'latency': resp.elapsed.total_seconds(),
+        'success': int(resp.ok)
+      }
+    except requests.exceptions.Timeout as e:
+      print(f'HTTP Check timeout')
+    except requests.exceptions.ConnectionError as e:
+      print(f'HTTP Check conection error')
+
 
   def payload(self):
     if self.data is None:
       self.get()
-    fields = {
-      'status_code': self.data.status_code,
-      'success': int(self.data.ok),
-      'latency': self.data.elapsed.total_seconds()
-    }
+    fields = self.data
     tags = { 'location': self.config.location_tag }
     return HttpCheckPayload(tags, fields)
   
