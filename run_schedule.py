@@ -12,12 +12,19 @@ def init():
     for source in cfg.sources.list():
         receivers = cfg.sources.dict()[source]['receivers']
         minutes = cfg.sources.dict()[source].get('minutes', None)
+        seconds = cfg.sources.dict()[source].get('seconds', None)
         at_minutes = cfg.sources.dict()[source].get('at_minutes', None)
-        if minutes is None:
-            schedule_at_minutes(at_minutes, run_job, (source, receivers))   
-        else:
+        if seconds is not None:
+            schedule.every(seconds).seconds.do(run_job, source, receivers)
+            print(f'<{source}> will run every {seconds}s seconds')
+        elif minutes is not None:
             schedule.every(minutes).minutes.do(run_job, source, receivers)
             print(f'<{source}> will run every {minutes}m, with {receivers}')
+        elif at_minutes is not None:
+            schedule_at_minutes(at_minutes, run_job, (source, receivers))   
+        else:
+            raise Exception(f'Timing for <{source}> not defined')
+            
     if cfg.tasks is not None:
         for source in cfg.tasks.list():
             task_name = cfg.tasks.dict()[source]['task']
@@ -35,7 +42,7 @@ def schedule_at_minutes(at_minutes, fn, args):
         at_minute_str = f':{str(at_minute).zfill(2)}'
         schedule.every().hour.at(at_minute_str).do(fn, *args)   
         print(f'<{args}> will run every hour at {at_minute_str}')
-
+        
 def run_job(source, receivers):
     print(f'Runnning <{source}> with {receivers}')
     try:
