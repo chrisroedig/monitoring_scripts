@@ -13,7 +13,7 @@ class DataSource(DataSourceBase):
   def get(self):
     self.data = {
         'status_code': 0,
-        'latency': float(self.config.timeout),
+        'latency': 0,
         'success': 0,
       }
     try:
