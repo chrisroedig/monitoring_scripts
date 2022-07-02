@@ -36,3 +36,9 @@ ecobee:
   client_id: your ecobee app client id
   influx_database: 'hvac'
   location_tag: ''
+
+mb8600_modem:
+  host: 192.168.100.1
+  username: '' 
+  password: ''
+  influx_database: modem
