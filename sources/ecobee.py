@@ -154,11 +154,11 @@ class DataSource(DataSourceBase):
         fields = {}
         for cap in data['capability']:
             fields[cap['type']] = cap['value']
-            if cap['type'] == 'temperature':
+            if cap['type'] == 'temperature' and cap['value'] != 'unknown':
                 fields[cap['type']] = int(fields[cap['type']]) / 10.0
             if cap['type'] == 'occupancy':
                 fields[cap['type']] = int(fields[cap['type']] == 'true')
-            if cap['type'] == 'humidity':
+            if cap['type'] == 'humidity' and cap['value'] != 'unknown':
                 fields[cap['type']] = float(fields[cap['type']])
         return SensorDataPayload(tags, fields)
     
