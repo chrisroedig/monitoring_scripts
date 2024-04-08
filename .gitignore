@@ -1,4 +1,6 @@
 *.pyc
+
+*.p
 config.yml
 tmp
 data
